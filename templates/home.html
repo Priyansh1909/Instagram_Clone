@@ -1,0 +1,103 @@
+{%extends 'base1.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+{% for row in value %}
+            <div class="postcontainer">
+                <div class="profileinfo">
+                    <img src="{{row[2]}}" width="30px" style="border-radius: 50%;">
+                    <span style="font-size: 30px;">{{row[0]}}</span>
+                </div>
+                <div class="postpic">
+                    <img src="{{row[1]}}">
+                </div>
+                <div class="likeAndComment">
+                    {% for likes in likesdict[row[3]] %}
+                    {% if likes[0] == "1" %}
+                    <!-- href="/like/{{row[3]}}" -->
+                    <a ><img src="/static/image/blackheart.png" id="heart_{{row[3]}}" ></a>
+                    {% else %}
+                    <!-- href="/like/{{row[3]}}" -->
+                        <a ><img src="/static/image/redHeart (1).png" id="heart_{{row[3]}}"></a>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="count">
+                    {% for count in counts[row[3]]%}
+                    <b><span id="likes_{{row[3]}}">{{count[0]}}</span><span>Likes</span></b>
+                    {% endfor %}
+                    </div>
+
+                    
+                   
+                    <form  method="post" id="form_{{row[3]}}" >
+                        <input type="text" placeholder="Comment Here" name="comment" id="comment_{{row[3]}}" />
+                        <input type="submit" value="Comment" id="submit_{{row[3]}}">
+                    </form>
+                    <div class="all_comment">
+                        <ul id="list_{{row[3]}}">
+                        {% for comments in commentsdict[row[3]]%}
+                        <li>{{comments[0]}}</li>
+
+                        {% endfor %}
+                        </ul>
+                    </div>        
+                </div>
+            </div>
+            <script type="text/javascript" charset="utf-8">
+                document.getElementById('form_{{row[3]}}').addEventListener('submit',(e)=>{
+                    e.preventDefault();
+                    let formdata = new FormData(document.getElementById('form_{{row[3]}}'));
+                    let xhttp = new XMLHttpRequest();
+                    xhttp.open('POST','/comment/{{row[3]}}');
+                    // xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhttp.onload = function(){
+                        if (xhttp.status === 200){
+                            let response = JSON.parse(xhttp.responseText);
+
+                        }
+                    }
+                    xhttp.send(formdata);
+
+                    comment = document.getElementById("comment_{{row[3]}}").value
+                    let li = document.createElement('li')
+                    li.innerText = comment
+                    document.getElementById('list_{{row[3]}}').appendChild(li);
+                    document.getElementById('form_{{row[3]}}').reset()
+                    
+                    
+                })
+
+                document.getElementById('heart_{{row[3]}}').addEventListener("click", (e)=>{
+                    e.preventDefault();
+
+                    console.log("i was clicked");
+                    console.log("{{row[3]}}")
+                    let xhttp = new XMLHttpRequest();
+                    
+                    xhttp.open('POST', '/likes')
+
+                    xhttp.send("{{row[3]}}")
+
+                    image = document.getElementById('heart_{{row[3]}}')
+                    likes = document.getElementById('likes_{{row[3]}}')
+
+                    if (image.src.match( '/static/image/blackheart.png')){
+                        image.src = "/static/image/redHeart (1).png";
+                        likes.innerText++
+                    }
+                    else{
+                        image.src = '/static/image/blackheart.png'
+                        likes.innerText--
+                    }
+
+
+                })
+            </script>
+            {% endfor %}
+
+            
+
+{% endblock %}

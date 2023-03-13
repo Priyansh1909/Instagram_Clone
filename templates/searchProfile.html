@@ -1,0 +1,105 @@
+{% extends 'base1.html'%}
+
+{% block head%}
+<title>@</title>
+{% endblock %}
+
+{% block body%}
+
+            <div class="profileContainer">
+                <div class="header">
+                    <div class="profileImage">
+                        {% for row in userinfo %}
+                        <img src="http://localhost:5000/{{row[5]}}" width="150px" height="150px">
+                        {% endfor %}
+                    </div>
+                    <div class="profileInfo">
+                        <div class="ProfileUsername">
+                            {% for row in userinfo %}
+                            <span>{{row[1]}}</span>
+                                {% endfor %}
+                        </div>
+                        <div class="profilePFF">
+                            {% for row in noofpost %}
+                            <span> <b>{{row[0]}}</b> Posts</span>
+                            {% endfor %}
+                            {% for row in followerinfo %}
+                            <span><b id="followerCount">{{row[0]}}</b> Followers</span>
+                            {% endfor %}
+                            {% for row in followinginfo %}
+                            <span>{{row[0]}} Following</span>
+                            {% endfor %}
+                        </div>
+                        <div class="Description">
+                            {% for row in userinfo %}
+                            <span>{{row[4]}}</span>
+                                {% endfor %}
+                            <h1 class="profiledesc">this is the description</h1>
+                        </div>
+                        <div>
+                            {% if followinfo == 1 %}
+                            {% for row in userinfo %}
+                            <!-- href="/unfollow/{{row[1]}}" -->
+                            <button><a  name ="followBtn" id="followBtn">Following</a></button>
+                            {% endfor %}
+                            {% else %}
+                            {% for row in userinfo %}
+                            <!-- href="/follow/{{row[1]}}" -->
+                            <button><a  name ="followBtn" id="followBtn">Follow</a></button>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+            
+                    </div>
+                </div>
+                <div class="profilepostname">
+                    <span>Posts</span>
+                </div>
+                <div class="posts">
+                    {% for row in post %}
+                    <div><img src="http://localhost:5000/{{row[0]}}"></div>
+
+                        {% endfor %}
+            
+            
+                </div>
+            </div>
+            {% for row in userinfo %}
+            <script type="text/javascript" charset="utf-8">
+                document.getElementById('followBtn').addEventListener("click",(e)=>{
+
+                    e.preventDefault()
+                    console.log('{{row[1]}}')
+
+                    let xhttp = new XMLHttpRequest();
+
+                    xhttp.open('post', '/follow')
+
+                    xhttp.send("{{row[1]}}")
+
+                    followBTN = document.getElementById('followBtn').innerText
+                    followerCount = document.getElementById('followerCount').innerText
+
+                
+
+                    if (followBTN == "Follow"){
+                        console.log("follow")
+                        document.getElementById('followBtn').innerText = "Following"
+                        document.getElementById('followerCount').innerText++
+                    
+
+                    }
+                    else{
+                        document.getElementById('followBtn').innerText = "Follow"
+                        document.getElementById('followerCount').innerText--
+                        console.log("unfollow")
+                    }
+
+                    
+                   
+                })
+
+               
+            </script>
+              {% endfor %}
+{% endblock %}

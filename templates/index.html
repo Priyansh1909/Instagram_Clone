@@ -1,0 +1,40 @@
+{%extends 'base.html' %}
+
+{% block head %}
+<title>Instagram</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="loginform_container">
+        <div class="instagram_name">
+            instagram
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+		  <div class="alert alert-warning alert-dismissible" role="alert" style="text-align: center;">
+			 Error: <span style="color: red;">{{message}}</span>
+		  </div>
+		{% endfor %}
+	  {% endif %}
+	{% endwith %}
+    
+        <form class="login_form" method="post" action="/">
+            <input type="text" id="username" name="username" placeholder="Username" />
+            <input type="password" id="password" name="password" placeholder="Password" />
+            <input type="submit" value="Login" name="Login_button" id="home_login_btn" />
+        </form>
+      
+        <div class="login_form_signup_btn">
+            <p>Don't Have an Account?<a href="/SignUp" id="signup_link">Sign up</a></p>
+        </div>
+    </div>
+
+
+</div>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base1.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body%}
+<p>Connect to <span id="username">{{username}}</span></p>
+<ul id="messages">
+    {% for message in messages%}
+    <li><b>{{message[0]}}:</b> {{message[2]}}</li>
+    {% endfor %}
+</ul>
+<form action="" method="post" >
+  <input type="text" name="message" id="message" required>
+  <input type="submit"  onclick ="sendMessage(event)">
+</form>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+<script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    // socket = io();
+    // socket.connect('http://127.0.0.1:5000')
+
+   
+    username = ('{{username}}')
+    let room3 = ["{{session}}", username];
+    room3.sort()
+    console.log(room3)
+    room4 = room3.join("_")
+    console.log(room4)
+
+
+
+    socket.on('connect', ()=>{
+    socket.emit('room', {'room':room4});
+    console.log('room:' , room4)
+    console.log(socket.id)
+    });
+
+    socket.on('message', function(data){
+        $('#messages').append('<li>' + data["message"]+'</li>')
+    
+    
+    });
+
+
+    function sendMessage(event){
+        event.preventDefault();
+        let message = document.getElementById("message").value
+        let sendto = username;
+        socket.emit('private_message' , {'sender': '{{session}}', 'sendto':username, 'message': message , 'room': room4});
+        socket.emit('notification',{'sendto': username, 'sender': '{{session}}'})
+        $('#message').val('')
+    }
+
+    
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{%extends 'base1.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<div class="message">
+    <input type="text" id="text" placeholder="Enter Your Message" />
+</div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf-8">
+         socket = io();
+         socket.connect('http://127.0.0.1:5000/data')
+
+         let messagecontainer = document.querySelector(".message")
+         socket.on('connect', function(){
+            let p = document.createElement("p")
+            p.innerText = "You're Connected"
+            messagecontainer.appendChild(p)
+         });
+         
+         let messageinput = document.getElementById("text")
+         messageinput.addEventListener("keypress", (e) =>{
+            if (e.which === 13){
+                socket.emit("message" , messageinput.value , )
+                messageinput.value = ""
+            }
+         })
+
+         socket.on("message", (message)=>{
+            let messageElement = document.createElement("p")
+            messageElement.innerText = message
+            messagecontainer.appendChild(messageElement )
+         })
+
+</script>
+
+{% endblock %}

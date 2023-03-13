@@ -1,0 +1,22 @@
+{%extends 'base1.html' %}
+
+{% block head %}
+<title>Instagram</title>
+{% endblock %}
+
+{% block body %}
+<form method="post" action="/search" id="myForm">
+    <br><br>
+    <input type="text" placeholder="Search" name="searchuser" >
+    <input type="submit" value="search">
+</form> 
+<br><br>
+
+<ul>
+    {% for row in value %}
+    <a href="/search/{{row[0]}}">{{row[0]}}</a> <br><br>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

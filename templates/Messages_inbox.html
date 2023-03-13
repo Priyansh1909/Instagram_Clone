@@ -1,0 +1,40 @@
+{% extends 'base1.html' %}
+
+{% block head %}
+
+{% endblock%}
+
+{% block body %}
+{% for row in value %}
+
+<div>
+    <a href="/inbox/{{row[0]}}">{{row[0]}}</a>
+    
+    <span style="padding: 2px;" id="NoOfMessage_{{row[0]}}"></span>
+  
+    <br><br>
+   
+</ul>
+</div>
+<script type="text/javascript" charset="utf-8">
+
+// socket.connect('http://127.0.0.1:5000')
+
+
+    socket.on('unreadmessage', function(data){
+
+        console.log(data['unread']["{{row[0]}}"])
+        document.getElementById('NoOfMessage_{{row[0]}}').innerText = (data['unread']["{{row[0]}}"] || null)
+        
+        
+         
+
+    })
+
+  
+ 
+          
+</script>
+{% endfor %}
+
+{% endblock %}

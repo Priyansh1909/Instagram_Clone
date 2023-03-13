@@ -1,0 +1,56 @@
+{% extends 'base1.html'%}
+
+{% block head%}
+
+{% endblock %}
+
+{% block body%}
+
+            <div class="profileContainer">
+                <div class="header">
+                    <div class="profileImage">
+                        {% for row in value %}
+                        <img src="{{row[5]}}" width="150px" height="150px">
+                        {% endfor %}
+                    </div>
+                    <div class="profileInfo">
+                        <div class="ProfileUsername">
+                            {% for row in value %}
+                            <span>{{row[1]}}</span>
+                                {% endfor %}
+                        </div>
+                        <div class="profilePFF">
+                            {% for row in value2 %}
+                            <span> <b>{{row[0]}}</b> Posts</span>
+                            {% endfor %}
+                            {% for row in followerinfo %}
+                            <span><b>{{row[0]}}</b> Followers</span>
+                            {% endfor %}
+                            {% for row in following %}
+                            <span><b>{{row[0]}}</b> Following</span>
+                            {% endfor %}
+
+                        </div>
+                        <div class="Description">
+                            {% for row in value %}
+                            <span>{{row[4]}}</span>
+                                {% endfor %}
+                            <h1 class="profiledesc">this is the description</h1>
+                        </div>
+            
+                    </div>
+                </div>
+                <div class="profilepostname">
+                    <span>Posts</span>
+                </div>
+                <div class="posts">
+                    {% for row in value1 %}
+                    <div><img src="{{row[0]}}"></div>
+
+                        {% endfor %}
+            
+            
+                </div>
+            </div>
+
+{% endblock %}

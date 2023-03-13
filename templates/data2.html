@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock%}
+
+{% block body %}
+
+ 
+
+
+
+{% for row in value %}
+<h1>{{row[3]}}</h1>
+<img src="{{row[3]}}">
+<img src="/static/image/icons8-instagram-48.png">
+<img src="/static/image/327017548_506026688322557_7051690338965306612_n.webp" width="520px" height="320px">
+
+{% endfor %}
+
+
+{% endblock %}
+
