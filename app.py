@@ -44,7 +44,7 @@ def allowed_file(filename):
 
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-mydb = mysql.connector.connect(host= "localhost", user = "root", password = "Champ99times", database = "instagram")
+mydb = mysql.connector.connect(host= "localhost", user = "root", password = "password123", database = "instagram")
 cursor = mydb.cursor()
 
 
